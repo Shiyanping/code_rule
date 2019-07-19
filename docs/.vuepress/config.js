@@ -1,5 +1,5 @@
 module.exports = {
-  base: '/',
+  base: '/code_rule/',
   title: '前端开发规范',
   dest: './dist',
   description: '规范前端团队的代码规范',
@@ -18,10 +18,10 @@ module.exports = {
       }
     ],
     sidebar: [
-      '/name_rule',
-      '/html',
-      '/css',
-      '/javascript'
+      './name_rule',
+      './html',
+      './css',
+      './javascript'
     ]
   }
 };
