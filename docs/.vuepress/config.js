@@ -21,7 +21,9 @@ module.exports = {
       './name_rule',
       './html',
       './css',
-      './javascript'
+      './javascript',
+      './eslint',
+      './husky'
     ]
   }
 };
