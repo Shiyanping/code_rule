@@ -16,13 +16,15 @@ sidebarDepth: 0
 
 - lint-staged：用于对 Git 暂存区中的文件执行代码检测。
 
-知道了这几个包的作用之后，我们开始从头给一个项目实现一套在提交代码之前的 eslint 检测。
+知道了这几个包的作用之后，我们开始来给一个项目实现一套在提交代码之前的 eslint 检测。
 
 ### ESlint
 
-首先开始配置一下自己的 eslint，大家不要着急，我下面会放出来我之前规范配套的 eslint 配置，直接复制粘贴就行。
+首先开始配置一下自己的 eslint，大家不要着急，接下来我会放一份纯正的 vue 配置，复制粘贴过来就行，如果是纯 JS、TS、React 的项目，可以根据腾讯的 [eslint-config-alloy](https://github.com/AlloyTeam/eslint-config-alloy) 配置。
 
-进入你的项目中，我这里新建一个项目开始配置
+**开始实践吧：**
+
+- 进入你的项目中，我这里新建一个项目开始配置
 
 ```bash
 # 要遵循文件夹命名规范
@@ -32,9 +34,10 @@ cd eslint_test
 npm init
 # 安装 eslint 和 babel-eslint
 npm i eslint babel-eslint -D
+# 配置其他的 eslint-config，需要根据说明安装其他依赖
 ```
 
-接着我们在项目的根目录下创建 eslint 的相关文件：
+- 接着我们在项目的根目录下创建 eslint 的相关文件：
 
 ```bash
 # eslint 要忽略的文件
@@ -43,7 +46,7 @@ touch .eslintignore
 touch .eslintrc.js
 ```
 
-在 `.eslintignore` 文件中填写 eslint 要过滤的文件
+- 在 `.eslintignore` 文件中填写 eslint 要过滤的文件
 
 ```
 build/*.js
@@ -52,9 +55,11 @@ public
 dist
 ```
 
-打开这个链接 [https://juejin.im/post/5d3130be6fb9a07eb74b7621](https://juejin.im/post/5d3130be6fb9a07eb74b7621)，去 copy 一下我根据之前规范制定的 eslint 配置，复制之后，粘贴到 `.eslintrc.js` 中。
+- 配置 `.eslintrc.js`
 
-接下来我们要配置一下 package.json 里面的执行脚本：
+直接看一下我之前写的[制定自己团队的前端开发规范之 eslint](https://juejin.im/post/5d3130be6fb9a07eb74b7621)，，去 copy 一下我根据制定的 eslint 配置，粘贴到 `.eslintrc.js` 中即可。
+
+- 接下来我们要配置一下 package.json 里面的执行脚本：
 
 ```json
 "scripts": {
@@ -91,7 +96,7 @@ npm i lint-staged husky -D
     }
   },
   "lint-staged": {
-    "**/*.js": ["eslint --fix", "git add"]
+    "src/**/*.{js,vue}": ["npm run lint", "git add"]
   },
   "author": "",
   "license": "ISC",
@@ -113,6 +118,10 @@ lint-staged 在 pre-commit 的时候执行，定义了对 git 暂存区中的文
 **因为 pre-commit 这个钩子是需要配合 git 去用的，它主要对文件夹 `.git/hooks/pre-commit` 文件做手脚，当我们从 git 上拉下来项目时，如果之前没对 hooks 下的文件做修改，那 hooks 下的文件都是以 sample 结尾的，这个时候钩子函数是不起作用的，当我们安装了 husky 之后，husky 会自动对 hooks 下面的文件做修改，当你安装完 husky 之后，再打开 `.git/hooks` 文件夹，你会发现所有的钩子文件，都会存在一份带有.sample 的，一份不带.sample 的，不带.sample 的文件就是 husky 创建的，这个才会让 git 钩子起作用。所以我们最好是先拉项目，然后再安装 husky，否则可能会导致 husky 失效。如果你是新开发项目，开发完后才提交到 git，开发完之后，你可以先关联 git 仓库，然后重新安装一下 husky 这个包就可以了。**
 
 这一套配置下来就可以把我们之前制定的前端规范强制执行了，怎么样，你会将这一套用到自己的项目中吗？目前我自己就在用，感觉还是很不错的，可以规避很多细节上的问题，如果你还没用上这一套，那你就需要赶快去实践一下了。
+
+## 开发中代码格式化
+
+上面的主要是在提交代码的时候进行格式化，这样会保证我们远程 git 仓库里面的代码都是统一的，其实本地开发的时候我们可以使用 prettier 进行格式化，也非常好用，支持很多编辑器，可以自行搜索配置。
 
 ## 阅读完后两部曲
 

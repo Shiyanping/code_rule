@@ -6,7 +6,7 @@ sidebarDepth: 0
 
 ### 缩进
 
-使用 tab 缩进（4 个空格）
+使用 tab 缩进（2 个空格）
 
 ```css
 .element {
@@ -47,11 +47,11 @@ sidebarDepth: 0
 
 ```css
 .element:after {
-  content: '';
-  background-image: url('logo.png');
+  content: "";
+  background-image: url("logo.png");
 }
 
-li[data-type='single'] {
+li[data-type="single"] {
   ...;
 }
 ```
